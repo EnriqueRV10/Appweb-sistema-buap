@@ -10,8 +10,8 @@
       <!-- TODO: Aquí van todos los inputs para el formulario del maestro -->
 
       <mat-form-field class="mat-input" appearance="outline">
-        <mat-label>ID de administrador</mat-label>
-        <input matInput [(ngModel)]="maestro.clave_admin" name="id" placeholder="Escribe clave de administrador">
+        <mat-label>ID de trabajador</mat-label>
+        <input matInput [(ngModel)]="maestro.clave_maestro" name="id" placeholder="Escribe clave de administrador">
       </mat-form-field>
       <div *ngIf="errors.clave_maestro" class="invalid-feedback">{{ errors.clave_maestro }}</div>
 

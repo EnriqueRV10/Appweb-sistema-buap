@@ -96,11 +96,13 @@ export class AlumnosService {
     if(!this.validatorService.required(data["edad"])){
       error["edad"] = this.errorService.required;
     }else if(!this.validatorService.numeric(data["edad"])){
-      alert("El formato es solo números");
+      alert("Campo Edad solo acepta números");
     }
 
     if(!this.validatorService.required(data["telefono"])){
       error["telefono"] = this.errorService.required;
+    }else if(!this.validatorService.numeric(data["edad"])){
+      alert("Campo Teléfono solo acepta números");
     }
 
     if(!this.validatorService.required(data["ocupacion"])){

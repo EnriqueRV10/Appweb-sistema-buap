@@ -8,7 +8,7 @@
       </div>
       <!-- Aquí empiezan los campos del formulario -->
       <mat-form-field class="mat-input" appearance="outline">
-        <mat-label>ID de alumno</mat-label>
+        <mat-label>ID/Matrícula</mat-label>
         <input matInput [(ngModel)]="alumno.clave_alumno" name="id" placeholder="Escribe ID de alumno">
       </mat-form-field>
       <div *ngIf="errors.clave_alumno" class="invalid-feedback">{{ errors.clave_alumno }}</div>
