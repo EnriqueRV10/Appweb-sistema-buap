@@ -20,6 +20,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
+//Para usar el mask
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+
 //Importa date picker
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -56,8 +59,9 @@ import { RegistroMaestrosComponent } from './partials/registro-maestros/registro
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgxMaskDirective,
   ],
-  providers: [],
+  providers: [provideNgxMask()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
