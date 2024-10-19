@@ -70,6 +70,12 @@ export class RegistroAlumnosComponent implements OnInit{
     
     //Validar la contraseña
     if(this.alumno.password == this.alumno.confirmar_password){
+
+      // Transformar la fecha de nacimiento al formato 'YYYY-MM-DD'
+      const fechaNacimiento = new Date(this.alumno.fecha_nacimiento);
+      this.alumno.fecha_nacimiento = fechaNacimiento.toISOString().split('T')[0]; // Extraer solo la fecha
+
+      console.log("Datos a enviar: ", this.alumno)
       //Entra a registrar
 
     }else{
