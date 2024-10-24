@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MaestrosService } from 'src/app/services/maestros.service';
 declare var $:any;
 
@@ -20,6 +21,7 @@ export class RegistroMaestrosComponent implements OnInit{
   public maestro:any = {};
   public errors:any={};
   public editar:boolean = false;
+  public token:string = "";
 
   //Para el select
   public areas: any[] = [
@@ -45,6 +47,7 @@ export class RegistroMaestrosComponent implements OnInit{
 
   constructor(
     private maestrosService: MaestrosService,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -93,7 +96,25 @@ export class RegistroMaestrosComponent implements OnInit{
 
     //Validar la contraseña
     if(this.maestro.password == this.maestro.confirmar_password){
+      // Transformar la fecha de nacimiento al formato 'YYYY-MM-DD'
+      const fechaNacimiento = new Date(this.maestro.fecha_nacimiento);
+      this.maestro.fecha_nacimiento = fechaNacimiento.toISOString().split('T')[0]; // Extraer solo la fecha
+
+      console.log("Datos a enviar: ", this.maestro)
       //Entra a registrar
+      this.maestrosService.registrarMaestro(this.maestro).subscribe(
+        (response) => {
+          alert("Usuario registrado correctamente");
+          console.log("Usuario registrado: ", response);
+          if (this.token != ""){
+            this.router.navigate(["home"]);
+          }else{
+            this.router.navigate(["/"]);
+          }
+        }, (error)=>{
+          alert("Error al registrar usuario");
+        }
+      );
 
     }else{
       alert("Las contraseñas no coinciden");
