@@ -95,6 +95,7 @@
               <div class="d-checkbox-nombre">{{materia.nombre}}</div>
           </mat-checkbox>
         </div>
+        <div *ngIf="errors.materias_json" class="invalid-feedback">{{ errors.materias_json }}</div>
       </div>
 
       <div class="section-buttons">

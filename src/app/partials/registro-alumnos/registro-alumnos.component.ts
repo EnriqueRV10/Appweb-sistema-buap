@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlumnosService } from 'src/app/services/alumnos.service';
+import { Location } from '@angular/common';
 declare var $:any;
 
 @Component({
@@ -24,7 +25,8 @@ export class RegistroAlumnosComponent implements OnInit{
 
   constructor(
     private alumnosService: AlumnosService,
-    private router: Router
+    private router: Router,
+    private location: Location,
   ){}
 
   ngOnInit(): void {
@@ -61,7 +63,7 @@ export class RegistroAlumnosComponent implements OnInit{
   }
 
   public regresar(){
-
+    this.location.back();
   }
 
   public registrar(){

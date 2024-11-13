@@ -103,6 +103,8 @@ export class AlumnosService {
       error["edad"] = this.errorService.required;
     }else if(!this.validatorService.numeric(data["edad"])){
       alert("Campo Edad solo acepta números");
+    }else if(data["edad"]<18){
+      error["edad"] = "La edad debe ser mayor o igual a 18";
     }
 
     if(!this.validatorService.required(data["telefono"])){
