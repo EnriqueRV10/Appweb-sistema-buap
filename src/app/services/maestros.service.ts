@@ -4,6 +4,7 @@ import { ValidatorService } from './tools/validator.service';
 import { ErrorsService } from './tools/errors.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FacadeService } from './facade.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
@@ -16,7 +17,8 @@ export class MaestrosService {
   constructor(
     private http: HttpClient,
     private validatorService: ValidatorService,
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private facadeService: FacadeService,
   ) {}
 
   public esquemaMaestro() {
@@ -113,5 +115,11 @@ export class MaestrosService {
   // Servicio para registrar un nuevo usuario
   public registrarMaestro(data:any): Observable<any>{
     return this.http.post<any>(`${environment.url_api}/maestro/`, data, httpOptions);
+  }
+
+  public obtenerListaMaestros (): Observable <any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.get<any>(`${environment.url_api}/lista-maestros/`, {headers:headers});
   }
 }

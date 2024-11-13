@@ -27,12 +27,17 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 import { RegistroAdminComponent } from './partials/registro-admin/registro-admin.component';
 import { RegistroAlumnosComponent } from './partials/registro-alumnos/registro-alumnos.component';
 import { RegistroMaestrosComponent } from './partials/registro-maestros/registro-maestros.component';
 import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
+import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.component';
+import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
+import { AdminScreenComponent } from './screens/admin-screen/admin-screen.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,10 @@ import { HomeScreenComponent } from './screens/home-screen/home-screen.component
     RegistroAdminComponent,
     RegistroAlumnosComponent,
     RegistroMaestrosComponent,
-    HomeScreenComponent
+    HomeScreenComponent,
+    AdminScreenComponent,
+    AlumnosScreenComponent,
+    MaestrosScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +70,8 @@ import { HomeScreenComponent } from './screens/home-screen/home-screen.component
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMaskDirective,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [provideNgxMask()],
   bootstrap: [AppComponent]
