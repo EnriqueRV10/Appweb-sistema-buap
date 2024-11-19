@@ -119,4 +119,12 @@ export class RegistroAlumnosComponent implements OnInit{
       event.preventDefault();
     }
   }
+
+  public soloNumeros(event: KeyboardEvent) {
+    const charCode = event.key.charCodeAt(0);
+    // Permitir solo números del 1 al 9
+    if (!(charCode >= 49 && charCode <= 57)) { // Números del 1 (charCode 49) al 9 (charCode 57)
+      event.preventDefault();
+    }
+  }
 }

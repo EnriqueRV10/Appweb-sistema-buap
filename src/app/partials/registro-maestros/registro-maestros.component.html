@@ -11,7 +11,7 @@
 
       <mat-form-field class="mat-input" appearance="outline">
         <mat-label>ID de trabajador</mat-label>
-        <input matInput [(ngModel)]="maestro.clave_maestro" name="id" placeholder="Escribe clave de administrador">
+        <input matInput [(ngModel)]="maestro.clave_maestro" name="id" placeholder="Escribe clave de administrador" (keypress)="soloNumeros($event)">
       </mat-form-field>
       <div *ngIf="errors.clave_maestro" class="invalid-feedback">{{ errors.clave_maestro }}</div>
 
@@ -70,7 +70,7 @@
 
       <mat-form-field class="mat-input" appearance="outline">
         <mat-label>Cubículo</mat-label>
-        <input matInput [(ngModel)]="maestro.cubiculo" placeholder="Escribe el cubículo"> 
+        <input matInput [(ngModel)]="maestro.cubiculo" placeholder="Escribe el cubículo" (keypress)="soloNumeros($event)"> 
       </mat-form-field>
       <div *ngIf="errors.cubiculo" class="invalid-feedback">{{ errors.cubiculo }}</div>
 
