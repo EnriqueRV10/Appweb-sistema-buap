@@ -13,6 +13,7 @@ export class LoginScreenComponent implements OnInit {
   public username: String = '';
   public password: String = '';
   public errors: any = {};
+  public load:boolean = false;
 
   constructor(
     private router: Router, 
@@ -22,6 +23,7 @@ export class LoginScreenComponent implements OnInit {
   ngOnInit(): void {}
 
   public login() {
+    this.load = true;
     //Validar
     this.errors = [];
 
@@ -34,6 +36,7 @@ export class LoginScreenComponent implements OnInit {
       (response) => {
         this.facadeService.saveUserData(response);
         this.router.navigate(['home']);
+        this.load = false;
       },
       (error) => {
         alert('No se pudo iniciar sesión');
