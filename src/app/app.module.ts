@@ -29,6 +29,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 import { RegistroAdminComponent } from './partials/registro-admin/registro-admin.component';
@@ -38,6 +39,9 @@ import { HomeScreenComponent } from './screens/home-screen/home-screen.component
 import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.component';
 import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
 import { AdminScreenComponent } from './screens/admin-screen/admin-screen.component';
+import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
+import { NgChartsModule } from 'ng2-charts';
+import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,9 @@ import { AdminScreenComponent } from './screens/admin-screen/admin-screen.compon
     HomeScreenComponent,
     AdminScreenComponent,
     AlumnosScreenComponent,
-    MaestrosScreenComponent
+    MaestrosScreenComponent,
+    EliminarUserModalComponent,
+    GraficasScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +77,9 @@ import { AdminScreenComponent } from './screens/admin-screen/admin-screen.compon
     MatNativeDateModule,
     NgxMaskDirective,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgChartsModule,
+    MatDialogModule,
   ],
   providers: [provideNgxMask()],
   bootstrap: [AppComponent]
