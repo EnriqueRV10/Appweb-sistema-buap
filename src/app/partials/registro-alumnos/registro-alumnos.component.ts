@@ -81,6 +81,17 @@ export class RegistroAlumnosComponent implements OnInit{
     this.location.back();
   }
 
+  // Función auxiliar para formatear fecha
+  private formatDateToBackend(date: Date | string): string {
+    if (!date) return '';
+    
+    const d = date instanceof Date ? date : new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
   public registrar(){
     //validar datos
     this.errors = [];    
@@ -93,13 +104,17 @@ export class RegistroAlumnosComponent implements OnInit{
     //Validar la contraseña
     if(this.alumno.password == this.alumno.confirmar_password){
 
-      // Transformar la fecha de nacimiento al formato 'YYYY-MM-DD'
-      const fechaNacimiento = new Date(this.alumno.fecha_nacimiento);
-      this.alumno.fecha_nacimiento = fechaNacimiento.toISOString().split('T')[0]; // Extraer solo la fecha
+      // Crear copia para no modificar el original
+      const alumnoToSend = { ...this.alumno };
+      
+      // Formatear la fecha para el backend
+      if (alumnoToSend.fecha_nacimiento) {
+        alumnoToSend.fecha_nacimiento = this.formatDateToBackend(alumnoToSend.fecha_nacimiento);
+      }
 
-      console.log("Datos a enviar: ", this.alumno)
+      console.log("Datos a enviar: ", alumnoToSend);
       //Entra a registrar
-      this.alumnosService.registrarAlumno(this.alumno).subscribe(
+      this.alumnosService.registrarAlumno(alumnoToSend).subscribe(
         (response) => {
           alert("Usuario registrado correctamente");
           console.log("Usuario registrado: ", response);
@@ -129,7 +144,15 @@ export class RegistroAlumnosComponent implements OnInit{
     }
     console.log("Pasó la validación");
 
-    this.alumnosService.editarAlumno(this.alumno).subscribe(
+    // Crear copia para no modificar el original
+    const alumnoToSend = { ...this.alumno };
+    
+    // Formatear la fecha para el backend
+    if (alumnoToSend.fecha_nacimiento) {
+      alumnoToSend.fecha_nacimiento = this.formatDateToBackend(alumnoToSend.fecha_nacimiento);
+    }
+
+    this.alumnosService.editarAlumno(alumnoToSend).subscribe(
       (response)=>{
         alert("Alumno editado correctamente");
         console.log("Alumno editado: ", response);

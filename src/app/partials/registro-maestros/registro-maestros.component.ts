@@ -103,6 +103,17 @@ export class RegistroMaestrosComponent implements OnInit{
     this.location.back();
   }
 
+  // Función auxiliar para formatear fecha
+  private formatDateToBackend(date: Date | string): string {
+    if (!date) return '';
+    
+    const d = date instanceof Date ? date : new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
   public registrar(){
     //Validar
     this.errors = [];
@@ -114,13 +125,17 @@ export class RegistroMaestrosComponent implements OnInit{
 
     //Validar la contraseña
     if(this.maestro.password == this.maestro.confirmar_password){
-      // Transformar la fecha de nacimiento al formato 'YYYY-MM-DD'
-      const fechaNacimiento = new Date(this.maestro.fecha_nacimiento);
-      this.maestro.fecha_nacimiento = fechaNacimiento.toISOString().split('T')[0]; // Extraer solo la fecha
+      // Crear copia para no modificar el original
+      const maestroToSend = { ...this.maestro };
+      
+      // Formatear la fecha para el backend
+      if (maestroToSend.fecha_nacimiento) {
+        maestroToSend.fecha_nacimiento = this.formatDateToBackend(maestroToSend.fecha_nacimiento);
+      }
 
-      console.log("Datos a enviar: ", this.maestro)
+      console.log("Datos a enviar: ", maestroToSend);
       //Entra a registrar
-      this.maestrosService.registrarMaestro(this.maestro).subscribe(
+      this.maestrosService.registrarMaestro(maestroToSend).subscribe(
         (response) => {
           alert("Usuario registrado correctamente");
           console.log("Usuario registrado: ", response);
@@ -151,7 +166,15 @@ export class RegistroMaestrosComponent implements OnInit{
     }
     console.log("Pasó la validación");
 
-    this.maestrosService.editarMaestro(this.maestro).subscribe(
+    // Crear copia para no modificar el original
+    const maestroToSend = { ...this.maestro };
+    
+    // Formatear la fecha para el backend
+    if (maestroToSend.fecha_nacimiento) {
+      maestroToSend.fecha_nacimiento = this.formatDateToBackend(maestroToSend.fecha_nacimiento);
+    }
+
+    this.maestrosService.editarMaestro(maestroToSend).subscribe(
       (response)=>{
         alert("Maestro editado correctamente");
         console.log("Maestro editado: ", response);

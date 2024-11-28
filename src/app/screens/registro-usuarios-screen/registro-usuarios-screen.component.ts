@@ -87,6 +87,15 @@ export class RegistroUsuariosScreenComponent implements OnInit{
           this.user.last_name = response.user.last_name;
           this.user.email = response.user.email;
           this.user.tipo_usuario = this.rol;
+
+          // Ajustar la fecha para el datepicker
+          if (this.user.fecha_nacimiento) {
+            // Crear la fecha en la zona horaria local
+            const [year, month, day] = this.user.fecha_nacimiento.split('-');
+            const fecha = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), 12, 0, 0);
+            this.user.fecha_nacimiento = fecha;
+          }
+
           this.isMaestro = true;
           console.log("Datos maestro: ", this.user);
         }, (error)=>{
@@ -102,6 +111,15 @@ export class RegistroUsuariosScreenComponent implements OnInit{
           this.user.last_name = response.user.last_name;
           this.user.email = response.user.email;
           this.user.tipo_usuario = this.rol;
+
+          // Ajustar la fecha para el datepicker
+          if (this.user.fecha_nacimiento) {
+            // Crear la fecha en la zona horaria local
+            const [year, month, day] = this.user.fecha_nacimiento.split('-');
+            const fecha = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), 12, 0, 0);
+            this.user.fecha_nacimiento = fecha;
+          }
+
           this.isAlumno= true;
           console.log("Datos alumno: ", this.user);
         }, (error)=>{
