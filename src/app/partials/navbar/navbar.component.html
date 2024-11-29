@@ -6,7 +6,8 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <ng-container *ngIf="tipo!='registro-usuarios'; else registraUsers">
+          <!-- Contenido normal del navbar -->
+          <ng-container *ngIf="tipo!='registro-usuarios' && tipo!='registro-materias'">
             <li class="nav-item">
               <a class="nav-link active" id="principal" aria-current="page" (click)="clickNavLink('home')">Inicio</a>
             </li>
@@ -16,30 +17,40 @@
             <li class="nav-item" *ngIf="rol!='maestro' && rol!='alumno'">
               <a class="nav-link" id="maestro" (click)="clickNavLink('maestros')">Maestros</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link">Lista de materias</a>
+            <li class="nav-item" *ngIf="rol === 'administrador' || rol === 'maestro'">
+              <a class="nav-link" id="materias" (click)="clickNavLink('materias')">Lista de materias</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="graficas" (click)="clickNavLink('graficas')">Gráficas</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" *ngIf="rol !== 'alumno'">
               <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Registrar
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" (click)="goRegistro()" *ngIf="rol!='alumno'">Alumnos</a></li>
-                <li><a class="dropdown-item" (click)="goRegistro()" *ngIf="rol!='maestro' && rol!='alumno'">Maestros</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Materias</a></li>
+                <li><a class="dropdown-item" (click)="goRegistro()">Alumnos</a></li>
+                <li *ngIf="rol === 'administrador'"><a class="dropdown-item" (click)="goRegistro()">Maestros</a></li>
+                <li *ngIf="rol === 'administrador'">
+                  <hr class="dropdown-divider">
+                  <a class="dropdown-item" (click)="goRegistroMateria()">Materias</a>
+                </li>
               </ul>
             </li>
           </ng-container>
-          <!-- En el else - del template mostrará todo lo correspondiente a la vista de registro -->
-          <ng-template #registraUsers>
+
+          <!-- Contenido para pantalla de registro de usuarios -->
+          <ng-container *ngIf="tipo=='registro-usuarios'">
             <label class="navbar-brand" *ngIf="!editar">Registro de usuarios del sistema</label>
             <label class="navbar-brand" *ngIf="editar">Editar usuario del sistema</label>
-          </ng-template>
+          </ng-container>
+
+          <!-- Contenido para pantalla de registro de materias -->
+          <ng-container *ngIf="tipo=='registro-materias'">
+            <label class="navbar-brand" *ngIf="!editar">Registro de materias del sistema</label>
+            <label class="navbar-brand" *ngIf="editar">Editar materia del sistema</label>
+          </ng-container>
         </ul>
+
         <form class="d-flex">
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,7 +58,9 @@
             </button>
             <ul class="dropdown-menu">
               <li *ngIf="token != ''"><a class="dropdown-item" (click)="logout()">Cerrar Sesión</a></li>
-              <li *ngIf="tipo=='registro-usuarios' && token == ''"><a class="dropdown-item" href="#">Iniciar Sesión</a></li>
+              <li *ngIf="(tipo=='registro-usuarios' || tipo=='registro-materias') && token == ''">
+                <a class="dropdown-item" href="#">Iniciar Sesión</a>
+              </li>
             </ul>
           </div>
         </form>

@@ -42,6 +42,7 @@ import { AdminScreenComponent } from './screens/admin-screen/admin-screen.compon
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
 import { NgChartsModule } from 'ng2-charts';
 import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
+import { RegistroMateriasScreenComponent } from './screens/registro-materias-screen/registro-materias-screen.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { GraficasScreenComponent } from './screens/graficas-screen/graficas-scre
     AlumnosScreenComponent,
     MaestrosScreenComponent,
     EliminarUserModalComponent,
-    GraficasScreenComponent
+    GraficasScreenComponent,
+    RegistroMateriasScreenComponent
   ],
   imports: [
     BrowserModule,

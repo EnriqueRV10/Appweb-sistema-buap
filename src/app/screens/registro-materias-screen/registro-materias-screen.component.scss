@@ -1,0 +1,128 @@
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding-bottom: 50px;
+}
+
+.title-materias{
+    font-size: 28px;
+    text-align: left;
+    font-family: Nexa-Bold;
+    letter-spacing: 2px;
+    color: #231F20;
+    text-transform: capitalize;
+    opacity: 1;
+  }
+
+.section-registro {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.body-registro {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.title-registro {
+    font-size: 24px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #555;
+    }
+
+    input, mat-select {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+
+        &:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+    }
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.d-checkbox-nombre {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.time-group {
+    label {
+        margin-bottom: 8px;
+    }
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.section-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 30px;
+    
+    button {
+        min-width: 120px;
+        padding: 8px 24px;
+        border-radius: 4px;
+        font-weight: 500;
+        
+        &:first-child {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            
+            &:hover {
+                background-color: darken(#dc3545, 5%);
+            }
+        }
+        
+        &:last-child {
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            
+            &:hover {
+                background-color: darken(#1976d2, 5%);
+            }
+        }
+    }
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+::ng-deep {
+    .mat-form-field-appearance-fill .mat-form-field-flex {
+        background-color: transparent;
+    }
+}
