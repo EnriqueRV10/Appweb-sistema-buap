@@ -74,14 +74,6 @@ export class MateriasService {
       error["hora_fin"] = this.errorService.required;
     }
 
-    if (data["hora_inicio"] && data["hora_fin"]) {
-      const inicio = new Date(`2000-01-01T${data["hora_inicio"]}`);
-      const fin = new Date(`2000-01-01T${data["hora_fin"]}`);
-      if (inicio >= fin) {
-        error["horario"] = "La hora de inicio debe ser menor a la hora de fin";
-      }
-    }
-
     if (!this.validatorService.required(data["salon"])) {
       error["salon"] = this.errorService.required;
     } else if (!/^[a-zA-Z0-9\s]+$/.test(data["salon"])) {
@@ -109,7 +101,7 @@ export class MateriasService {
   public registrarMateria(data: any): Observable<any> {
     var token = this.facadeService.getSessionToken();
     var headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
-    return this.http.post<any>(`${environment.url_api}/materias/`, data, { headers: headers });
+    return this.http.post<any>(`${environment.url_api}/materia/`, data, { headers: headers });
   }
 
   public obtenerListaMaterias(): Observable<any> {

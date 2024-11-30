@@ -1,3 +1,4 @@
+// registro-materias-screen.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,6 +20,12 @@ export class RegistroMateriasScreenComponent implements OnInit {
   public idMateria: Number = 0;
   public token: string = "";
   public lista_maestros: any[] = [];
+
+  // Para control de tiempo
+  timeConfig: any = {
+    format: 12,
+    minutesGap: 5,
+  };
 
   // Para los días de la semana
   public diasSemana = [
@@ -50,15 +57,11 @@ export class RegistroMateriasScreenComponent implements OnInit {
     if (this.activatedRoute.snapshot.params['id'] != undefined) {
       this.editar = true;
       this.idMateria = this.activatedRoute.snapshot.params['id'];
-      console.log("ID Materia: ", this.idMateria);
-      // Al iniciar la vista obtiene la materia por su ID
       this.obtenerMateria();
     } else {
       this.materia = this.materiasService.esquemaMateria();
       this.token = this.facadeService.getSessionToken();
     }
-
-    // Obtener lista de maestros para el select
     this.obtenerMaestros();
   }
 
@@ -66,7 +69,6 @@ export class RegistroMateriasScreenComponent implements OnInit {
     this.maestrosService.obtenerListaMaestros().subscribe(
       (response) => {
         this.lista_maestros = response;
-        console.log("Lista maestros: ", this.lista_maestros);
       },
       (error) => {
         alert("No se pudo obtener la lista de maestros");
@@ -78,13 +80,11 @@ export class RegistroMateriasScreenComponent implements OnInit {
     this.materiasService.getMateriaByID(this.idMateria).subscribe(
       (response) => {
         this.materia = response;
-        // Cargar los días seleccionados en los checkboxes
         if (this.materia.dias_json) {
           this.diasSemana.forEach(dia => {
             dia.checked = this.materia.dias_json.includes(dia.id);
           });
         }
-        console.log("Datos materia: ", this.materia);
       },
       (error) => {
         alert("No se pudieron obtener los datos de la materia para editar");
@@ -92,28 +92,76 @@ export class RegistroMateriasScreenComponent implements OnInit {
     );
   }
 
-  public regresar() {
-    this.location.back();
+  onTimeChange(timeString: string, tipo: 'inicio' | 'fin') {
+    // Actualizar el valor correspondiente
+    if (tipo === 'inicio') {
+      this.materia.hora_inicio = timeString;
+    } else {
+      this.materia.hora_fin = timeString;
+    }
+    
+    // Solo validar el horario si ambos campos tienen valor
+    if (this.materia.hora_inicio && this.materia.hora_fin) {
+      this.validarHorario();
+    }
   }
 
-  public registrar() {
-    // Validar
-    this.errors = [];
-
-    // Preparar datos para envío
+  public onDiaChange() {
     this.materia.dias_json = this.diasSemana
       .filter(dia => dia.checked)
       .map(dia => dia.id);
+  }
 
-    this.errors = this.materiasService.validarMateria(this.materia, this.editar);
-    if (!$.isEmptyObject(this.errors)) {
+  private validarHorario() {
+    try {
+      const [horaInicio, minInicio] = this.materia.hora_inicio.split(':');
+      const [horaFin, minFin] = this.materia.hora_fin.split(':');
+      
+      const fechaInicio = new Date();
+      fechaInicio.setHours(parseInt(horaInicio), parseInt(minInicio), 0);
+      
+      const fechaFin = new Date();
+      fechaFin.setHours(parseInt(horaFin), parseInt(minFin), 0);
+      
+      // Si la hora de inicio es mayor o igual a la hora de fin
+      if (fechaInicio >= fechaFin) {
+        this.errors.horario = "La hora de inicio debe ser menor a la hora de fin";
+      } else {
+        // Solo eliminar el error de horario si la validación pasa
+        delete this.errors.horario;
+      }
+    } catch (error) {
+      console.error('Error al validar horario:', error);
+      this.errors.horario = "Error en el formato de las horas";
+    }
+  }
+
+  public registrar() {
+    // Actualizar los días seleccionados antes de validar
+    this.materia.dias_json = this.diasSemana
+      .filter(dia => dia.checked)
+      .map(dia => dia.id);
+  
+    // Crear una copia del objeto errors actual
+    const currentErrors = { ...this.errors };
+    
+    // Obtener nuevos errores del servicio
+    const serviceErrors = this.materiasService.validarMateria(this.materia, this.editar);
+    
+    // Combinar los errores preservando los errores de horario existentes
+    this.errors = {
+      ...serviceErrors,
+      ...(currentErrors.horario ? { horario: currentErrors.horario } : {})
+    };
+  
+    if (Object.keys(this.errors).length > 0) {
       return false;
     }
-
+  
+    // ... resto del código de registro
     this.materiasService.registrarMateria(this.materia).subscribe(
       (response) => {
         alert("Materia registrada correctamente");
-        console.log("Materia registrada: ", response);
         this.router.navigate(["home"]);
       },
       (error) => {
@@ -124,15 +172,19 @@ export class RegistroMateriasScreenComponent implements OnInit {
   }
 
   public actualizar() {
-    // Validación
     this.errors = [];
-
-    // Preparar datos para envío
     this.materia.dias_json = this.diasSemana
       .filter(dia => dia.checked)
       .map(dia => dia.id);
 
-    this.errors = this.materiasService.validarMateria(this.materia, this.editar);
+    // Validar horario antes de enviar
+    this.validarHorario();
+    
+    this.errors = {
+      ...this.errors,
+      ...this.materiasService.validarMateria(this.materia, this.editar)
+    };
+
     if (!$.isEmptyObject(this.errors)) {
       return false;
     }
@@ -140,7 +192,6 @@ export class RegistroMateriasScreenComponent implements OnInit {
     this.materiasService.editarMateria(this.materia).subscribe(
       (response) => {
         alert("Materia editada correctamente");
-        console.log("Materia editada: ", response);
         this.router.navigate(["home"]);
       },
       (error) => {
@@ -150,9 +201,13 @@ export class RegistroMateriasScreenComponent implements OnInit {
     return true;
   }
 
+  public regresar() {
+    this.location.back();
+  }
+
   public soloNumeros(event: KeyboardEvent) {
     const charCode = event.key.charCodeAt(0);
-    if (!(charCode >= 48 && charCode <= 57)) { // Solo números del 0 al 9
+    if (!(charCode >= 48 && charCode <= 57)) {
       event.preventDefault();
     }
   }
@@ -160,10 +215,10 @@ export class RegistroMateriasScreenComponent implements OnInit {
   public soloAlfanumerico(event: KeyboardEvent) {
     const charCode = event.key.charCodeAt(0);
     if (!(
-      (charCode >= 48 && charCode <= 57) || // Números del 0 al 9
-      (charCode >= 65 && charCode <= 90) || // Letras mayúsculas
-      (charCode >= 97 && charCode <= 122) || // Letras minúsculas
-      charCode === 32 // Espacio
+      (charCode >= 48 && charCode <= 57) ||
+      (charCode >= 65 && charCode <= 90) ||
+      (charCode >= 97 && charCode <= 122) ||
+      charCode === 32
     )) {
       event.preventDefault();
     }

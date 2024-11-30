@@ -35,10 +35,10 @@
 }
 
 .form-group {
-    margin-bottom: 20px;
     
     label {
         display: block;
+        margin-top: 12px;
         margin-bottom: 8px;
         font-weight: 500;
         color: #555;
@@ -46,7 +46,6 @@
 
     input, mat-select {
         width: 100%;
-        padding: 8px 12px;
         border: 1px solid #ddd;
         border-radius: 4px;
         font-size: 14px;
@@ -117,12 +116,28 @@
     }
 }
 
-mat-form-field {
-    width: 100%;
-}
-
 ::ng-deep {
     .mat-form-field-appearance-fill .mat-form-field-flex {
         background-color: transparent;
     }
 }
+
+mat-form-field {
+    width: 100%!important;
+    height: 48px!important;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  
+  .mat-error {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  
+  .checkbox-group {
+    margin-bottom: 16px;
+  }
+  
+  .row {
+    margin-bottom: 16px;
+  }

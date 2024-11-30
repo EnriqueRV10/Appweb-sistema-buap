@@ -30,6 +30,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 
 import { RegistroAdminComponent } from './partials/registro-admin/registro-admin.component';
@@ -82,6 +83,7 @@ import { RegistroMateriasScreenComponent } from './screens/registro-materias-scr
     MatPaginatorModule,
     NgChartsModule,
     MatDialogModule,
+    NgxMaterialTimepickerModule,
   ],
   providers: [provideNgxMask()],
   bootstrap: [AppComponent]
