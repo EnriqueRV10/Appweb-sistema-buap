@@ -1,0 +1,186 @@
+.wrapper {
+  width: 100vw;
+  height: 90vh;
+}
+
+.header-home {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.body-maestros {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.container {
+  max-width: 90vw;
+}
+
+.title-perfil {
+  margin-left: 3rem;
+  font-size: 32px;
+  text-align: left;
+  font-family: Nexa-Bold;
+  letter-spacing: 0px;
+  color: #231F20;
+  text-transform: capitalize;
+  opacity: 1;
+}
+
+
+.title-table {
+  margin-left: 0;  // Quitar el margen izquierdo
+  font-size: 28px;
+  text-align: center;  // Centrar el texto
+  font-family: Nexa-Bold;
+  letter-spacing: 0px;
+  color: #231F20;
+  text-transform: capitalize;
+  opacity: 1;
+  display: block;  // Asegurar que ocupe todo el ancho
+}
+
+.alert.alert-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+// .title-table {
+//   margin-left: 3rem;
+//   font-size: 28px;
+//   text-align: left;
+//   font-family: Nexa-Bold;
+//   letter-spacing: 0px;
+//   color: #231F20;
+//   text-transform: capitalize;
+//   opacity: 1;
+// }
+
+// Estilos de la tabla
+table {
+  width: 100%;
+  padding-bottom: 1.5rem;
+}
+
+::ng-deep .mat-mdc-table {
+  table-layout: fixed !important;
+}
+
+::ng-deep .mat-mdc-header-cell {
+  border-bottom-color: #231F20;
+  font-family: Nexa-Bold !important;
+  font-size: 18px;
+  text-align: left;
+  letter-spacing: 0px;
+  color: #231F20;
+  opacity: 1;
+  padding: 10px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+::ng-deep .mat-mdc-cell {
+  text-align: left;
+  font-family: Nexa !important;
+  font-size: 15px !important;
+  letter-spacing: 0px !important;
+  color: #231F20 !important;
+  opacity: 1 !important;
+  padding: 10px !important;
+  // Estas tres líneas permiten que el texto se envuelva
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  min-height: 48px !important;
+}
+
+// Ajustar anchos de columnas específicas
+::ng-deep .mat-column-nrc {
+  min-width: 80px;
+  max-width: 100px;
+}
+
+::ng-deep .mat-column-nombre {
+  min-width: 200px;
+}
+
+::ng-deep .mat-column-seccion {
+  min-width: 80px;
+  max-width: 100px;
+}
+
+::ng-deep .mat-column-dias {
+  min-width: 100px;
+  max-width: 120px;
+}
+
+::ng-deep .mat-column-horario {
+  min-width: 120px;
+  max-width: 140px;
+}
+
+::ng-deep .mat-column-salon {
+  min-width: 80px;
+  max-width: 100px;
+}
+
+::ng-deep .mat-column-programa_educativo {
+  min-width: 100px;
+  max-width: 120px;
+}
+
+::ng-deep .mat-column-profesor {
+  min-width: 200px;
+}
+
+::ng-deep .mat-column-creditos {
+  min-width: 80px;
+  max-width: 100px;
+}
+
+::ng-deep .mat-column-editar,
+::ng-deep .mat-column-eliminar {
+  min-width: 80px;
+  max-width: 100px;
+}
+
+// Estilos para los botones de acciones
+.td-editar {
+  color: #0092B8 !important;
+  cursor: pointer !important;
+  font-size: 20px !important;
+  text-align: center;
+}
+
+.td-editar:hover {
+  color: #006179 !important;
+  font-size: 25px !important;
+  text-align: center;
+}
+
+.td-eliminar {
+  color: #E84150 !important;
+  cursor: pointer !important;
+  font-size: 20px !important;
+  text-align: center;
+}
+
+.td-eliminar:hover {
+  color: #ce1626 !important;
+  font-size: 25px !important;
+  text-align: center;
+}
+
+// Estilo para el texto con tooltip
+.cell-with-tooltip {
+  cursor: pointer;
+}

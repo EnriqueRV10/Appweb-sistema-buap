@@ -9,7 +9,7 @@
           <!-- Contenido normal del navbar -->
           <ng-container *ngIf="tipo!='registro-usuarios' && tipo!='registro-materias'">
             <li class="nav-item">
-              <a class="nav-link active" id="principal" aria-current="page" (click)="clickNavLink('home')">Inicio</a>
+              <a class="nav-link" id="principal" aria-current="page" (click)="clickNavLink('home')">Inicio</a>
             </li>
             <li class="nav-item" *ngIf="rol!='alumno'">
               <a class="nav-link" id="alumno" aria-current="page" (click)="clickNavLink('alumnos')">Alumnos</a>
@@ -18,7 +18,7 @@
               <a class="nav-link" id="maestro" (click)="clickNavLink('maestros')">Maestros</a>
             </li>
             <li class="nav-item" *ngIf="rol === 'administrador' || rol === 'maestro'">
-              <a class="nav-link" id="materias" (click)="clickNavLink('materias')">Lista de materias</a>
+              <a class="nav-link" id="materias" (click)="clickNavLink('materias-screen')">Lista de materias</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="graficas" (click)="clickNavLink('graficas')">Gráficas</a>

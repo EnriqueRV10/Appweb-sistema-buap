@@ -31,6 +31,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 import { RegistroAdminComponent } from './partials/registro-admin/registro-admin.component';
@@ -44,6 +45,8 @@ import { EliminarUserModalComponent } from './modals/eliminar-user-modal/elimina
 import { NgChartsModule } from 'ng2-charts';
 import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
 import { RegistroMateriasScreenComponent } from './screens/registro-materias-screen/registro-materias-screen.component';
+import { MateriasScreenComponent } from './screens/materias-screen/materias-screen.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,8 @@ import { RegistroMateriasScreenComponent } from './screens/registro-materias-scr
     MaestrosScreenComponent,
     EliminarUserModalComponent,
     GraficasScreenComponent,
-    RegistroMateriasScreenComponent
+    RegistroMateriasScreenComponent,
+    MateriasScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -84,6 +88,8 @@ import { RegistroMateriasScreenComponent } from './screens/registro-materias-scr
     NgChartsModule,
     MatDialogModule,
     NgxMaterialTimepickerModule,
+    MatTooltipModule,
+    RouterModule,
   ],
   providers: [provideNgxMask()],
   bootstrap: [AppComponent]
