@@ -113,7 +113,7 @@ export class MateriasService {
   public getMateriaByID(idMateria: Number): Observable<any> {
     var token = this.facadeService.getSessionToken();
     var headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
-    return this.http.get<any>(`${environment.url_api}/materias/?id=${idMateria}`, { headers: headers });
+    return this.http.get<any>(`${environment.url_api}/materia/?id=${idMateria}`, { headers: headers });
   }
 
   public editarMateria(data: any): Observable<any> {

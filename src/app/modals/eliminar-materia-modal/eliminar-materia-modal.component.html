@@ -1,0 +1,18 @@
+<div class="wrapper">
+    <div class="icon-close">
+        <mat-icon (click)="cerrar_modal()">close</mat-icon>
+    </div>
+
+    <div class="body-modal">
+        <h2 id="eliminar-materia" class="title-modal">Eliminar Materia</h2>
+
+        <p class="descripcion">
+            Estás a punto de eliminar esta materia. Una vez que la elimines no podrás deshacer esta acción.
+        </p>
+
+        <div class="buttons-modal">
+            <button mat-button class="btn-regresar" (click)="cerrar_modal()">Cancelar</button>
+            <button mat-button class="btn-eliminar" color="warn" (click)="eliminarMateria()">Eliminar</button>
+        </div>
+    </div>
+</div>

@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { EliminarUserModalComponent } from 'src/app/modals/eliminar-user-modal/eliminar-user-modal.component';
 import { FacadeService } from 'src/app/services/facade.service';
 import { MateriasService } from 'src/app/services/materias.service';
+import { EliminarMateriaModalComponent } from 'src/app/modals/eliminar-materia-modal/eliminar-materia-modal.component';
+
 
 @Component({
   selector: 'app-materias-screen',
@@ -132,23 +134,18 @@ export class MateriasScreenComponent implements OnInit {
   }
 
   public delete(idMateria: number) {
-    const dialogRef = this.dialog.open(EliminarUserModalComponent, {
-      data: { id: idMateria, rol: 'materia' },
+    const dialogRef = this.dialog.open(EliminarMateriaModalComponent, {
+      data: { id: idMateria },
       height: '288px',
       width: '328px',
     });
-
+  
     dialogRef.afterClosed().subscribe(result => {
       if (result.isDelete) {
-        this.materiasService.eliminarMateria(idMateria).subscribe(
-          () => {
-            console.log("Materia eliminada");
-            window.location.reload();
-          },
-          (error) => {
-            alert("No se pudo eliminar la materia");
-          }
-        );
+        console.log("Materia eliminada");
+        window.location.reload();
+      } else {
+        console.log("No se eliminó la materia");
       }
     });
   }

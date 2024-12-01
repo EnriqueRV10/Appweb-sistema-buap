@@ -47,6 +47,8 @@ import { GraficasScreenComponent } from './screens/graficas-screen/graficas-scre
 import { RegistroMateriasScreenComponent } from './screens/registro-materias-screen/registro-materias-screen.component';
 import { MateriasScreenComponent } from './screens/materias-screen/materias-screen.component';
 import { RouterModule } from '@angular/router';
+import { EditarMateriaModalComponent } from './modals/editar-materia-modal/editar-materia-modal.component';
+import { EliminarMateriaModalComponent } from './modals/eliminar-materia-modal/eliminar-materia-modal.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { RouterModule } from '@angular/router';
     EliminarUserModalComponent,
     GraficasScreenComponent,
     RegistroMateriasScreenComponent,
-    MateriasScreenComponent
+    MateriasScreenComponent,
+    EditarMateriaModalComponent,
+    EliminarMateriaModalComponent
   ],
   imports: [
     BrowserModule,

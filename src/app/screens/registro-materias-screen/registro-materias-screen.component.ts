@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MaestrosService } from 'src/app/services/maestros.service';
 import { MateriasService } from 'src/app/services/materias.service';
 import { FacadeService } from 'src/app/services/facade.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditarMateriaModalComponent } from 'src/app/modals/editar-materia-modal/editar-materia-modal.component';
+
 declare var $: any;
 
 @Component({
@@ -50,7 +53,8 @@ export class RegistroMateriasScreenComponent implements OnInit {
     private router: Router,
     private location: Location,
     public activatedRoute: ActivatedRoute,
-    private facadeService: FacadeService
+    private facadeService: FacadeService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -79,12 +83,23 @@ export class RegistroMateriasScreenComponent implements OnInit {
   private obtenerMateria() {
     this.materiasService.getMateriaByID(this.idMateria).subscribe(
       (response) => {
-        this.materia = response;
+        this.materia = {
+          ...response,
+          // Ajustar formato de hora para el timepicker
+          hora_inicio: response.hora_inicio?.substring(0, 5), // Obtener solo HH:mm
+          hora_fin: response.hora_fin?.substring(0, 5), // Obtener solo HH:mm
+          // Asignar el ID del profesor desde el objeto anidado
+          profesor_id: response.profesor?.id
+        };
+  
+        // Marcar los días seleccionados
         if (this.materia.dias_json) {
           this.diasSemana.forEach(dia => {
             dia.checked = this.materia.dias_json.includes(dia.id);
           });
         }
+  
+        console.log("Materia formateada para edición:", this.materia);
       },
       (error) => {
         alert("No se pudieron obtener los datos de la materia para editar");
@@ -92,15 +107,16 @@ export class RegistroMateriasScreenComponent implements OnInit {
     );
   }
 
-  onTimeChange(timeString: string, tipo: 'inicio' | 'fin') {
-    // Actualizar el valor correspondiente
+  public onTimeChange(timeString: string, tipo: 'inicio' | 'fin') {
+    // Asegurarse de que el formato sea HH:mm
+    const formattedTime = timeString.substring(0, 5);
+    
     if (tipo === 'inicio') {
-      this.materia.hora_inicio = timeString;
+      this.materia.hora_inicio = formattedTime;
     } else {
-      this.materia.hora_fin = timeString;
+      this.materia.hora_fin = formattedTime;
     }
     
-    // Solo validar el horario si ambos campos tienen valor
     if (this.materia.hora_inicio && this.materia.hora_fin) {
       this.validarHorario();
     }
@@ -173,10 +189,12 @@ export class RegistroMateriasScreenComponent implements OnInit {
 
   public actualizar() {
     this.errors = [];
+    
+    // Actualizar los días seleccionados
     this.materia.dias_json = this.diasSemana
       .filter(dia => dia.checked)
       .map(dia => dia.id);
-
+  
     // Validar horario antes de enviar
     this.validarHorario();
     
@@ -184,20 +202,40 @@ export class RegistroMateriasScreenComponent implements OnInit {
       ...this.errors,
       ...this.materiasService.validarMateria(this.materia, this.editar)
     };
-
+  
     if (!$.isEmptyObject(this.errors)) {
       return false;
     }
-
-    this.materiasService.editarMateria(this.materia).subscribe(
-      (response) => {
-        alert("Materia editada correctamente");
-        this.router.navigate(["home"]);
-      },
-      (error) => {
-        alert("No se pudo editar la materia");
+  
+    // Mostrar el modal de confirmación
+    const dialogRef = this.dialog.open(EditarMateriaModalComponent, {
+      data: { nombre: this.materia.nombre },
+      height: '250px',
+      width: '400px',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.isConfirmed) {
+        // Crear el objeto con el formato correcto para el backend
+        const materiaToUpdate = {
+          ...this.materia,
+          hora_inicio: this.materia.hora_inicio + ':00',
+          hora_fin: this.materia.hora_fin + ':00'
+        };
+  
+        // Proceder con la actualización
+        this.materiasService.editarMateria(materiaToUpdate).subscribe(
+          (response) => {
+            alert("Materia editada correctamente");
+            this.router.navigate(["home"]);
+          },
+          (error) => {
+            alert("No se pudo editar la materia");
+          }
+        );
       }
-    );
+    });
+  
     return true;
   }
 

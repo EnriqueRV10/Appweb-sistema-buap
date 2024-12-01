@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <div class="icon-close">
+      <button mat-icon-button (click)="cerrarModal()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="body-modal">
+      <h2 class="title-modal">Editar Materia</h2>
+  
+      <p class="descripcion">
+        Estás a punto de modificar la información de la materia "{{data.nombre}}". 
+        ¿Deseas continuar con la actualización?
+      </p>
+  
+      <div class="buttons-modal">
+        <button mat-button class="btn-regresar" (click)="cerrarModal()">Cancelar</button>
+        <button mat-button class="btn-editar" color="primary" (click)="confirmarEdicion()">Actualizar</button>
+      </div>
+    </div>
+  </div>
