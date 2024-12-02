@@ -181,7 +181,7 @@ export class RegistroMateriasScreenComponent implements OnInit {
         this.router.navigate(["home"]);
       },
       (error) => {
-        alert("Error al registrar materia");
+        alert("Error al registrar materia:" + error.message);
       }
     );
     return true;
