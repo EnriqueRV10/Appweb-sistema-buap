@@ -181,7 +181,12 @@ export class RegistroMateriasScreenComponent implements OnInit {
         this.router.navigate(["home"]);
       },
       (error) => {
-        alert("Error al registrar materia:" + error.message);
+        // Manejar específicamente el error de NRC duplicado
+        if (error.error && error.error.message) {
+          alert(error.error.message); // Mostrará el mensaje específico del backend
+        } else {
+          alert("Error al registrar materia: " + (error.message || 'Error desconocido'));
+        }
       }
     );
     return true;

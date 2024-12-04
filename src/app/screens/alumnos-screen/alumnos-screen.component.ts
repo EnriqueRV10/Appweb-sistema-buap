@@ -20,7 +20,7 @@ export class AlumnosScreenComponent implements OnInit{
   public lista_alumnos: any[] = [];
 
   //Para la tabla
-  displayedColumns: string[] = ['clave_alumno', 'nombre', 'email', 'fecha_nacimiento', 'telefono', 'rfc', 'curp', 'edad', 'ocupacion', 'editar', 'eliminar'];
+  displayedColumns: string[] = [];
   dataSource = new MatTableDataSource<DatosUsuario>(this.lista_alumnos as DatosUsuario[]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -39,7 +39,15 @@ export class AlumnosScreenComponent implements OnInit{
   ngOnInit(): void {
     this.name_user = this.facadeService.getUserCompleteName();
     this.rol = this.facadeService.getUserGroup();
-    //Lista de alumnos
+    
+    // Definir las columnas según el rol
+    if (this.rol === 'alumno') {
+      this.displayedColumns = ['clave_alumno', 'nombre', 'email', 'fecha_nacimiento', 'telefono', 'rfc', 'curp', 'edad', 'ocupacion'];
+    } else {
+      this.displayedColumns = ['clave_alumno', 'nombre', 'email', 'fecha_nacimiento', 'telefono', 'rfc', 'curp', 'edad', 'ocupacion', 'editar', 'eliminar'];
+    }
+
+    // Lista de alumnos
     this.obtenerAlumnos();
     this.initPaginator();
   }
