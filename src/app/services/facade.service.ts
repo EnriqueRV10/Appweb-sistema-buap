@@ -73,7 +73,6 @@ export class FacadeService {
     return this.http.get<any>(`${environment.url_api}/logout/`, {headers: headers});
   }
 
-
   //Funciones para utilizar las cookies en web
   retrieveSignedUser(){
     var headers: any;
@@ -94,7 +93,6 @@ export class FacadeService {
   getSessionToken(){
     return this.cookieService.get(session_cookie_name);
   }
-
 
   saveUserData(user_data:any){
     var secure = environment.url_api.indexOf("https")!=-1;
@@ -130,5 +128,4 @@ export class FacadeService {
   getUserGroup(){
     return this.cookieService.get(group_name_cookie_name);
   }
-
 }

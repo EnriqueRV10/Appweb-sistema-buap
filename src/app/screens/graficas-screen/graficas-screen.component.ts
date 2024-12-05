@@ -45,7 +45,7 @@ export class GraficasScreenComponent implements OnInit {
     }
   };
 
-  // Barras - Ahora mostrará la distribución de usuarios
+  // Barras
   barChartData: ChartConfiguration['data'] = {
     labels: ["Administradores", "Maestros", "Alumnos"],
     datasets: [
@@ -84,8 +84,7 @@ export class GraficasScreenComponent implements OnInit {
         ticks: {
           stepSize: 1
         },
-        // Establecer un valor fijo más alto para el máximo
-        max: 10 // Puedes ajustar este valor según tus necesidades
+        max: 10
       }
     },
     layout: {
@@ -194,7 +193,6 @@ export class GraficasScreenComponent implements OnInit {
   }
 
   private actualizarGraficas() {
-    // Actualizar datos para gráficas de usuarios
     const datosUsuarios = [
       this.total_user.total_admins,
       this.total_user.total_maestros,
@@ -214,7 +212,6 @@ export class GraficasScreenComponent implements OnInit {
       }]
     };
 
-    // Crear nuevos objetos para forzar la actualización de las gráficas
     this.pieChartData = {
       ...this.pieChartData,
       datasets: [{

@@ -1,4 +1,3 @@
-// registro-materias-screen.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -85,14 +84,11 @@ export class RegistroMateriasScreenComponent implements OnInit {
       (response) => {
         this.materia = {
           ...response,
-          // Ajustar formato de hora para el timepicker
-          hora_inicio: response.hora_inicio?.substring(0, 5), // Obtener solo HH:mm
-          hora_fin: response.hora_fin?.substring(0, 5), // Obtener solo HH:mm
-          // Asignar el ID del profesor desde el objeto anidado
+          hora_inicio: response.hora_inicio?.substring(0, 5),
+          hora_fin: response.hora_fin?.substring(0, 5),
           profesor_id: response.profesor?.id
         };
   
-        // Marcar los días seleccionados
         if (this.materia.dias_json) {
           this.diasSemana.forEach(dia => {
             dia.checked = this.materia.dias_json.includes(dia.id);
@@ -174,7 +170,6 @@ export class RegistroMateriasScreenComponent implements OnInit {
       return false;
     }
   
-    // ... resto del código de registro
     this.materiasService.registrarMateria(this.materia).subscribe(
       (response) => {
         alert("Materia registrada correctamente");

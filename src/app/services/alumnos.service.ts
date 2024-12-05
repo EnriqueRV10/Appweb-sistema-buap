@@ -70,7 +70,6 @@ export class AlumnosService {
       if (!this.validatorService.required(data["password"])) {
         error["password"] = this.errorService.required;
       }
-
       if (!this.validatorService.required(data["confirmar_password"])) {
         error["confirmar_password"] = this.errorService.required;
       }
@@ -153,7 +152,4 @@ export class AlumnosService {
     var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
     return this.http.delete<any>(`${environment.url_api}/alumnos-edit/?id=${idUser}`,{headers:headers});
   }
-
 }
-
-
